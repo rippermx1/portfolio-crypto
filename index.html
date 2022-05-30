@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Crypto</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-env>
+        - numpy
+        - matplotlib
+    </py-env>
+</head>
+<body>
+    <div id="table"></div>
+    <py-script output="table">
+        import matplotlib.pyplot as plt
+        import numpy as np
+
+        x = np.random.randn(1000)
+        y = np.random.randn(1000)
+
+        fig, ax = plt.subplots()
+        ax.scatter(x, y)
+        fig
+    </py-script>
+</body>
+</html>
