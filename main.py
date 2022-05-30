@@ -15,10 +15,13 @@ engine = create_engine(
     sqlalchemy.engine.url.URL(
         drivername='postgresql+pg8000',
         username=os.getenv('GCP_DB_USER'),
-        password=os.getenv('GCP_DB_PASSWORD'),
-        host=os.getenv('GCP_DB_HOST'),
-        port=os.getenv('GCP_DB_PORT'),
+        password=os.getenv('GCP_DB_PASSWORD'),        
         database=os.getenv('GCP_DB_NAME'),
+        query={
+            "unix_sock": "{}/{}/.s.PGSQL.5432".format(
+                "/cloudsql",  # e.g. "/cloudsql"
+                os.getenv('GCP_DB_INSTANCE_NAME'))  # i.e "<PROJECT-NAME>:<INSTANCE-REGION>:<INSTANCE-NAME>"
+        }
     ))
 
 def get_cryptocurrency_listings_latest(cryptocurrency_type="coins", limit=12, convert="USD"):
