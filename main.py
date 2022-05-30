@@ -13,7 +13,7 @@ cmc = CoinMarketCapAPI(os.getenv('COINMARKET_CAP_KEY'))
 
 engine = create_engine(
     sqlalchemy.engine.url.URL(
-        drivername='postgres',
+        drivername='postgresql+pg8000',
         username=os.getenv('GCP_DB_USER'),
         password=os.getenv('GCP_DB_PASSWORD'),
         host=os.getenv('GCP_DB_HOST'),
