@@ -42,8 +42,12 @@ def get_weighted_cryptocurrency_list(data):
     return DataFrame(data)    
 
 
-data = get_cryptocurrency_listings_latest() # From CoinMarketCapAPI
-data = get_parsed_cryptocurrency_list(data) # Summary of data
-data = get_weighted_cryptocurrency_list(data) # Weighted data for each coin
+import functions_framework
 
-print(data)
+@functions_framework.http
+def main(request):
+    data = get_cryptocurrency_listings_latest() # From CoinMarketCapAPI
+    data = get_parsed_cryptocurrency_list(data) # Summary of data
+    data = get_weighted_cryptocurrency_list(data) # Weighted data for each coin
+    return data
+
