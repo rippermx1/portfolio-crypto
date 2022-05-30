@@ -2,4 +2,6 @@ requests
 pandas
 python-coinmarketcap
 python-dotenv
-
+functions_framework
+sqlalchemy
+psycopg2

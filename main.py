@@ -5,10 +5,11 @@ from coinmarketcapapi import CoinMarketCapAPI
 from coinmarketcapapi import Response
 from dotenv import load_dotenv
 from pandas import DataFrame
+from sqlalchemy import create_engine
 load_dotenv()
 
 cmc = CoinMarketCapAPI(os.getenv('COINMARKET_CAP_KEY'))
-
+engine = create_engine(f'postgresql://{os.getenv("GCP_ADMIN_DAILY_MARKET_CAP_DB_INSTANCE_USER")}:{os.getenv("GCP_ADMIN_DAILY_MARKET_CAP_DB_INSTANCE_PASSWORD")}@{os.getenv("GCP_ADMIN_DAILY_MARKET_CAP_DB_INSTANCE_HOST")}:{os.getenv("GCP_ADMIN_DAILY_MARKET_CAP_DB_INSTANCE_PORT")}/{os.getenv("GCP_ADMIN_DAILY_MARKET_CAP_DB_INSTANCE_NAME")}')
 
 def get_cryptocurrency_listings_latest(cryptocurrency_type="coins", limit=12, convert="USD"):
     r: Response= cmc.cryptocurrency_listings_latest(cryptocurrency_type=cryptocurrency_type, limit=limit, convert=convert)
@@ -48,5 +49,6 @@ def main(request):
     data = get_cryptocurrency_listings_latest() # From CoinMarketCapAPI
     data = get_parsed_cryptocurrency_list(data) # Summary of data
     data = get_weighted_cryptocurrency_list(data) # Weighted data for each coin
+    data.to_sql('CMK12', con=engine, if_exists='append', index=False)
     return data.to_json()
 
